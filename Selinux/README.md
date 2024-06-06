@@ -11,17 +11,17 @@
 ```
 - Установка policycoreutils-python
 - Запуск nginx 3 способами
-#1. Переключатель setsebool
+# 1. Переключатель setsebool
 a. В audit.log находим ошибку
 b. передаем в audit2allow
 c. Меняем параметр nis_enabled on
-#2. Добавить разрешенный порт
+# 2. Добавить разрешенный порт
 а. semanage port -a -t http_port_t =p tcp 4881
-#3. Утилита audit2allow
+# 3. Утилита audit2allow
 a. Передаем в утилиту логи для формирования модуля
 b. grep nginx /var/log/audit/audit.log | audit2allow -M nginx
 c. semodule -i nginx.pp
-# Выполнение второй части ДЗ
+## Выполнение второй части ДЗ
 
 - ошибка обновления зоны происходит в связи с некорректным выставлением домена на файле
 - применяется команда chcon для изменения контекста домена chcon -R -t named_zone_t /etc/named
