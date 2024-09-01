@@ -1,0 +1,76 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Set timezone
+    timezone:
+      name:  Europe/Moscow
+    become: yes
+    become_method: sudo
+
+- hosts: web
+  - name: update
+    apt:
+      update_cache: true
+    become: true
+    become_merhod: sudo
+
+  - name: nginx
+    apt:
+      name: nginx
+      state: latest
+    become: true
+    become_merhod: sudo
+
+  - name: copy 
+    copy: 
+      src: files/nginx.conf
+      dest: /etc/nginx/nginx.conf
+      owner: root
+      group: root
+      mode: 0640
+
+  - name: restart nginx
+    systemd:
+      name: nginx
+      state: restarted
+      enabled: yes
+
+- hosts: log
+  become: true
+  tasks:
+  - name: copy rsyslog.conf
+    copy:
+      src: files/log/rsyslog.conf
+      dest: /etc/rsyslog.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - restart rsyslog
+    
+- hosts: log
+  become: true
+  tasks:
+  - name: copy rsyslog
+    copy: 
+      src: files/rsyslog.conf
+      dest: /etc/rsyslog.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify:
+      - restart rsyslog
+  - name: restart rsyslog
+    systemd:
+      name: rsyslog
+      state: restarted
+      enabled: yes
+
+
+
+
+- hosts: log
+  - name: mv file for err
+  command: mv /var/www/html/index.nginx-debian.html /var/www/
