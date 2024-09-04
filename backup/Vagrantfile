@@ -1,0 +1,30 @@
+ENV['VAGRANT_SERVER_URL'] = 'http://vagrant.elab.pro'
+
+Vagrant.configure(2) do |config| 
+    config.vm.box = "ubuntu/22.04" 
+
+    config.vm.provider "virtualbox" do |v| 
+    v.memory = 812 
+    v.cpus = 1 
+    end 
+
+
+    config.vm.define "backup" do |backup| 
+    backup.vm.network "private_network", ip: "192.168.56.160" 
+    backup.vm.hostname = "backup" 
+    backup.vm.disk :disk, name: "backup", size: "2GB"
+    end 
+
+
+    config.vm.define "client" do |client| 
+    client.vm.network "private_network", ip: "192.168.56.150" 
+    client.vm.hostname = "client" 
+    client.vm.provision "ansible" do |ansible|
+        ansible.playbook = "ansible/playbook.yml"
+        ansible.inventory_path = "ansible/inventory"
+        ansible.host_key_checking = "false"
+        ansible.limit = "all"
+        end
+    end 
+end 
+   
