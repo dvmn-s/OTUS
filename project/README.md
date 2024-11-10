@@ -21,7 +21,7 @@
 
 
 ### Схема
-![Scheme](https://github.com/dvmn-s/OTUS/tree/master/project/2024-11-10_20-51-31.png)
+![Scheme](https://github.com/dvmn-s/OTUS/blob/master/project/2024-11-10_20-51-31.png)
 
 
 ## Хосты
