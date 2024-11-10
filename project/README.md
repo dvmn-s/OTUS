@@ -21,6 +21,9 @@
 
 
 ### Схема
+![Scheme](https://github.com/dvmn-s/OTUS/tree/master/project/2024-11-10_20-51-31.png)
+
+
 ## Хосты
 
 Хосты | IP адрес
